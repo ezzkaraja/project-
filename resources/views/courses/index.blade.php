@@ -10,7 +10,10 @@
 <body class="bg-gray-50 p-6"> <!-- الخلفية + مسافة من كل الحواف -->
 
   <div class="max-w-7xl mx-auto">
-    <h1 class="text-2xl font-bold mb-6">All Courses()</h1>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold mb-6">All Courses({{$courses->total()}})</h1>
+        <a class="bg-indigo-500 text-white p-2 rounded" href="{{route('courses.create')}}">Add New Courses</a>
+    </div>
 
     <div class="overflow-x-auto">
       <table class="table-auto w-full border-collapse border border-gray-300 rounded-lg shadow-sm bg-white">
@@ -26,18 +29,21 @@
           </tr>
         </thead>
         <tbody>
-         @foreach ($courses as $course )
+         @forelse ($courses as $course )
               <tr class="hover:bg-gray-50">
             <td class="border border-gray-300 px-4 py-2"> {{$course->id}}</td>
             <td class="border border-gray-300 px-4 py-2"> {{$course->title}}</td>
             <td class="border border-gray-300 px-4 py-2"> {{$course->slug}}</td>
             <td class="border border-gray-300 px-4 py-2"> {{$course->description}}</td>
-            <td class="border border-gray-300 px-4 py-2"> <img src="{{$course->image}}" alt=""></td>
+            <td class="border border-gray-300 px-4 py-2"> <img width="100" src="{{ asset('storage/' . $course->image) }}" alt=""></td>
             <td class="border border-gray-300 px-4 py-2"> {{$course->price}}</td>
             <td class="border border-gray-300 px-4 py-2"> {{$course->category}}</td>
           </tr>
-
-         @endforeach
+           @empty
+              <tr>
+                <td class="border border-gray-300 px-4 py-2 text-center" colspan="7">No courses available.</td>
+                </tr>
+         @endforelse
         </tbody>
       </table>
         <div class="mt-4">

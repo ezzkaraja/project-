@@ -84,3 +84,5 @@ Route::get('/db',[dbOperationController::class,'index']);
 
 // });
 Route::get('/courses',[CourseController::class,'index'])->name('courses.index');
+Route::get('/courses/create',[CourseController::class,'create'])->name('courses.create');
+Route::post('/courses/store',[CourseController::class,'store'])->name('courses.store');
