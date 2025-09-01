@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Appcontroller;
+use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\dbOperationController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\sitecontroller;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CourseController;
 use App\Http\Middleware\chacktype;
 
 
@@ -75,3 +77,10 @@ Route::get('/help', function () {
     return show('ezz');
 });
 Route::get('/db',[dbOperationController::class,'index']);
+
+// Route::prefix('courses')->name('courses.')->group(function(){
+//     Route::get('/course',[CoursesController::class,'index'])->name('index');
+
+
+// });
+Route::get('/courses',[CourseController::class,'index'])->name('courses.index');
