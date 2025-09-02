@@ -5,6 +5,7 @@ use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\dbOperationController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\sitecontroller;
+use App\Http\Controllers\studentController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
@@ -86,3 +87,11 @@ Route::get('/db',[dbOperationController::class,'index']);
 Route::get('/courses',[CourseController::class,'index'])->name('courses.index');
 Route::get('/courses/create',[CourseController::class,'create'])->name('courses.create');
 Route::post('/courses/store',[CourseController::class,'store'])->name('courses.store');
+
+
+
+
+Route::get('/students', [studentController::class, 'index'])->name('students.index');
+Route::get('/students/create', [studentController::class, 'create'])->name('students.create');
+Route::post('/students/store', [studentController::class, 'store'])->name('students.store');
+
