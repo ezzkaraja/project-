@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\studentRequest;
 use App\Models\studnt;
+use File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -28,5 +29,13 @@ class studentController extends Controller
         ]);
         return redirect()->route('students.index')
                          ->with('success', 'Student created successfully!');
+    }
+    public function destroy($id){
+        $student = studnt::findOrFail($id);
+        File::delete(public_path('storage/'.$student->image));
+        $student->delete();
+
+        return redirect()->route('students.index')
+                         ->with('success', 'Student deleted successfully!');
     }
  }

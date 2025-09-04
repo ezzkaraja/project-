@@ -87,6 +87,7 @@ Route::get('/db',[dbOperationController::class,'index']);
 Route::get('/courses',[CourseController::class,'index'])->name('courses.index');
 Route::get('/courses/create',[CourseController::class,'create'])->name('courses.create');
 Route::post('/courses/store',[CourseController::class,'store'])->name('courses.store');
+Route::delete('/courses/{id}',[CourseController::class,'destroy'])->name('courses.destroy');
 
 
 
@@ -94,4 +95,5 @@ Route::post('/courses/store',[CourseController::class,'store'])->name('courses.s
 Route::get('/students', [studentController::class, 'index'])->name('students.index');
 Route::get('/students/create', [studentController::class, 'create'])->name('students.create');
 Route::post('/students/store', [studentController::class, 'store'])->name('students.store');
+Route::delete('/students/{id}', [studentController::class, 'destroy'])->name('students.destroy');
 

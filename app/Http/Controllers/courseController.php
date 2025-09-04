@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\courseRequest;
 use App\Models\course;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
 class courseController extends Controller
@@ -46,9 +47,21 @@ class courseController extends Controller
             'category'    => $request->category,
             'description' => $request->description,
         ]);
- 
+
         return redirect()->route('courses.index')
-                         ->with('success', 'Course created successfully!');
+                         ->with('sweet_success', 'Course created successfully!');
+
+
+
+    }
+    public function destroy($id){
+        $course=course::findOrFail($id);
+        File::delete(public_path('storage/'.$course->image));
+        $course->delete();
+        return redirect()->route('courses.index')
+                         ->with('sweet_success', 'Course deleted successfully!');
+
+
 
 
     }
