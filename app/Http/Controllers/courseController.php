@@ -65,4 +65,29 @@ class courseController extends Controller
 
 
     }
+    public function edit($id){
+        $course=course::findOrFail($id);
+        return view('courses.edit',compact('course'));
+    }
+
+    public function update(courseRequest $request,$id){
+        $course=course::findOrFail($id);
+        if($request->hasFile('image')){
+            //delete old image
+            File::delete(public_path('storage/'.$course->image));
+            //upload new image
+            $path=$request->file('image')->store('uploads','public');
+        }
+
+        $course->update([
+            'title'       => $request->title,
+            'slug'        => Str::slug($request->title),
+            'image'       => $path ?? $course->image,
+            'price'       => $request->price,
+            'category'    => $request->category,
+            'description' => $request->description,
+        ]);
+        return redirect()->route('courses.index')
+                         ->with('sweet_success', 'Course updated successfully!');
+}
 }

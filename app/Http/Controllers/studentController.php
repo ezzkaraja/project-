@@ -38,4 +38,24 @@ class studentController extends Controller
         return redirect()->route('students.index')
                          ->with('success', 'Student deleted successfully!');
     }
+    public function edit($id){
+        $student = studnt::findOrFail($id);
+        return view('students.edit',compact('student'));
+    }
+    public function update(studentRequest $request,$id){
+        $student = studnt::findOrFail($id);
+        if($request->hasFile('image')){
+            File::delete(public_path('storage/'.$student->image));
+            $path=$request->file('image')->store('uploads','public');
+        }
+        $student->update([
+            'name'  => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'image' => $path ?? $student->image,
+        ]);
+        return redirect()->route('students.index')
+                            ->with('success', 'Student updated successfully!');
+
+    }
  }

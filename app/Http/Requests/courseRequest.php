@@ -21,9 +21,13 @@ class courseRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        $imageRule ='nullable|image|mimes:png,jpg,jpeg,gif,svg';
+        if($this->method()=='Post')
+              $imageRule ='required|image|mimes:png,jpg,jpeg,gif,svg';
         return [
           'title'=>'required|max:200',
-          'image'=>'required|image|mimes:png,jpg,jpeg,gif,svg',
+          'image'=> $imageRule,
           'price'=>'required|numeric',
           'category'=>'required',
           'description'=>'required'          ];

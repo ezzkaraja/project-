@@ -21,12 +21,16 @@ class studentRequest extends FormRequest
      */
     public function rules(): array
     {
+        $imageRule = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        if($this->method() == 'post'){
+              $imageRule = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
         return [
 
             'name'  => 'required|string|max:255',
             'email' => 'required|email|unique:studnts,email',
             'phone' => 'required|string|max:15',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => $imageRule,
         ];
     }
 }

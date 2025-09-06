@@ -88,6 +88,8 @@ Route::get('/courses',[CourseController::class,'index'])->name('courses.index');
 Route::get('/courses/create',[CourseController::class,'create'])->name('courses.create');
 Route::post('/courses/store',[CourseController::class,'store'])->name('courses.store');
 Route::delete('/courses/{id}',[CourseController::class,'destroy'])->name('courses.destroy');
+Route::get('/courses/{id}/edit',[CourseController::class,'edit'])->name('courses.edit');
+Route::match(['put','patch'],'/courses/{id}',[CourseController::class,'update'])->name('courses.update');
 
 
 
@@ -96,4 +98,7 @@ Route::get('/students', [studentController::class, 'index'])->name('students.ind
 Route::get('/students/create', [studentController::class, 'create'])->name('students.create');
 Route::post('/students/store', [studentController::class, 'store'])->name('students.store');
 Route::delete('/students/{id}', [studentController::class, 'destroy'])->name('students.destroy');
+Route::get('/students/{id}/edit', [studentController::class, 'edit'])->name('students.edit');
+Route::match(['put','patch'],'/students/{id}', [studentController::class, 'update'])->name('students.update');
+
 
