@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\courseRequest;
 use App\Models\course;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
 class courseController extends Controller
 {
-    public function index(){
+    public function index(Request $request ){
 
-        $courses=course::latest('id')->paginate(10);
+        $courses=course::orderBy('id', $request->order ??'DESC' )->when($request->search,function (Builder $query){
+
+            $query->where('title','like','%'.request()->search.'%');
+                  }  )->paginate($request->count ?? 2);
         return view('courses.index',compact('courses'));
     }
     public function create(){

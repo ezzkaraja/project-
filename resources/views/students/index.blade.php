@@ -14,7 +14,23 @@
         <h1 class="text-2xl font-bold mb-6">All students({{$students->total()}})</h1>
         <a class="bg-indigo-500 text-white p-2 rounded" href="{{route('students.create')}}">Add New student</a>
     </div>
-
+          <div>
+        <form class="flex gap-2" action="{{route('students.index')}}" method="get">
+            @csrf
+            <input type="text" name="search"  placeholder="Search courses..." class="border border-gray-300 rounded px-2 py-1 w-[70%]"value="{{ request('search') }}">
+            <select name="order" class="border border-gray-300 rounded px-2 py-1 w-[10%]" >
+                <option @selected(request()->order =='ASC')  value="ASC">ASC</option>
+                <option @selected(request()->order =='DESC') value="DESC">DESC</option>
+            </select>
+            <select name="count" class="border border-gray-300 rounded px-2 py-1 w-[10%]">
+                <option  @selected(request()->count == 2)  value="2">2</option>
+                <option  @selected(request()->count == 20) value="20">20</option>
+                <option  @selected(request()->count == 30) value="30">30</option>
+                <option @selected(request()->count == $students->total())  value="{{$students->total()}}">All</option>
+            </select>
+            <button type="submit" class="bg-teal-600 text-white p-2 rounded w-[10%]">Filter</button>
+        </form>
+       </div>
     <div class="overflow-x-auto">
       <table class="table-auto w-full border-collapse border border-gray-300 rounded-lg shadow-sm bg-white">
         <thead class="bg-gray-100">
@@ -30,10 +46,6 @@
         </thead>
         <tbody>
           @forelse ($students as $student)
-
-
-
-
               <tr class="hover:bg-gray-50">
             <td class="border border-gray-300 px-4 py-2">{{$student->id}}</td>
             <td class="border border-gray-300 px-4 py-2">{{$student->name}}</td>
@@ -67,7 +79,7 @@
         </tbody>
       </table>
         <div class="mt-4">
-          {{ $students->links() }}
+          {{ $students->withqueryString()->links() }}
         </div>
 
     </div>

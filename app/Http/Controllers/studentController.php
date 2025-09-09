@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\studentRequest;
 use App\Models\studnt;
 use File;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class studentController extends Controller
 {
-    public function index(){
-     $students = DB::table('studnts')->paginate('2');
+    public function index(Request $request){
+     $students = studnt::orderBy('id',$request->order ?? 'DESC')->when($request->search,function(Builder $query){
+        $query->where('name','like','%'.request()->search.'%');
+
+     })->paginate($request->count ?? 2);
         return view('students.index',compact('students'));
     }
 
