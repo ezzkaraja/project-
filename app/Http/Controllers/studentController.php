@@ -58,8 +58,13 @@ class studentController extends Controller
             'phone' => $request->phone,
             'image' => $path ?? $student->image,
         ]);
-        return redirect()->route('students.index')
+        return redirect()->route('students.index' , ['page' => $request->page ?? 1])
                             ->with('success', 'Student updated successfully!');
 
+    }
+    //soft delete
+    public function trash(){
+        $students = studnt::onlyTrashed()->paginate(10);
+        return view('students.trash',compact('students'));
     }
  }

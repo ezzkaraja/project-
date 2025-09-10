@@ -58,6 +58,9 @@
             @enderror
         </div>
         <button type="submit" class="bg-indigo-500 text-white p-2 rounded">update</button>
+       @if (request()->page)
+        <input type="hidden" name="page" value="{{ request()->page}}">
+       @endif
       </form>
   </div>
   @if (session('success'))

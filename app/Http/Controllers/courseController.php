@@ -60,7 +60,7 @@ class courseController extends Controller
     }
     public function destroy($id){
         $course=course::findOrFail($id);
-        File::delete(public_path('storage/'.$course->image));
+        // File::delete(public_path('storage/'.$course->image));
         $course->delete();
         return redirect()->route('courses.index')
                          ->with('sweet_success', 'Course deleted successfully!');
@@ -91,7 +91,11 @@ class courseController extends Controller
             'category'    => $request->category,
             'description' => $request->description,
         ]);
-        return redirect()->route('courses.index')
+        return redirect()->route('courses.index', ['page' => $request->page ?? 1])
                          ->with('sweet_success', 'Course updated successfully!');
 }
+    public function trash(){
+        $courses=course::onlyTrashed()->paginate(10);
+        return view('courses.trash',compact('courses'));
+    }
 }

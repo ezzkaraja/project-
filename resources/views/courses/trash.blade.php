@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>All Courses</title>
+  <title>trash Courses</title>
   @vite(['resources/css/app.css'])
 </head>
 <body class="bg-gray-50 p-6"> <!-- الخلفية + مسافة من كل الحواف -->
@@ -17,29 +17,9 @@
 
     @endif
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold mb-6">All Courses({{$courses->total()}})</h1>
-        <div>
-            <a class="bg-indigo-500 text-white p-2 rounded" href="{{route('courses.create')}}">Add New Courses</a>
-          <a class="bg-gray-500 text-white p-2 rounded" href="{{route('courses.trash')}}">trash students</a>
+        <h1 class="text-2xl font-bold mb-6">trash Courses({{$courses->total()}})</h1>
+        <a class="bg-indigo-500 text-white p-2 rounded" href="{{route('courses.index')}}">All Courses</a>
     </div>
-        </div>
-       <div>
-        <form class="flex gap-2" action="{{route('courses.index')}}" method="get">
-            @csrf
-            <input type="text" name="search"  placeholder="Search courses..." class="border border-gray-300 rounded px-2 py-1 w-[70%]"value="{{ request('search') }}">
-            <select name="order" class="border border-gray-300 rounded px-2 py-1 w-[10%]" >
-                <option @selected(request()->order == 'ASC' ) value="ASC">ASC</option>
-                <option @selected(request()->order == 'DESC' ) value="DESC">DESC</option>
-            </select>
-            <select name="count" class="border border-gray-300 rounded px-2 py-1 w-[10%]">
-                <option  @selected(request()->count==2) value="2">2</option>
-                <option  @selected(request()->count==20) value="20">20</option>
-                <option  @selected(request()->count==30) value="30">30</option>
-                <option  @selected(request()->count==$courses->total())  value="{{$courses->total()}}">All</option>
-            </select>
-            <button type="submit" class="bg-teal-600 text-white p-2 rounded w-[10%]">Filter</button>
-        </form>
-       </div>
     <div class="overflow-x-auto">
       <table class="table-auto w-full border-collapse border border-gray-300 rounded-lg shadow-sm bg-white">
         <thead class="bg-gray-100">
@@ -49,8 +29,7 @@
             <th class="border border-gray-300 px-4 py-2 text-left">Slug</th>
             <th class="border border-gray-300 px-4 py-2 text-left">Description</th>
             <th class="border border-gray-300 px-4 py-2 text-left">Image</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Price</th>
-            <th class="border border-gray-300 px-4 py-2 text-left">Category</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Deleted At</th>
             <th class="border border-gray-300 px-4 py-2 text-left">Actions</th>
           </tr>
         </thead>
@@ -62,8 +41,7 @@
             <td class="border border-gray-300 px-4 py-2"> {{$course->slug}}</td>
             <td class="border border-gray-300 px-4 py-2"> {{$course->description}}</td>
             <td class="border border-gray-300 px-4 py-2"> <img width="100" src="{{ asset('storage/' . $course->image) }}" alt=""></td>
-            <td class="border border-gray-300 px-4 py-2"> {{$course->price}}</td>
-            <td class="border border-gray-300 px-4 py-2"> {{$course->category}}</td>
+            <td class="border border-gray-300 px-4 py-2"> {{$course->deleted_at->diffForHumans()}}</td>
             <td class="border border-gray-300 px-4 py-2">
               <form action="{{ route('courses.destroy', $course->id) }}" method="POST">
     @csrf

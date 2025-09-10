@@ -90,6 +90,7 @@ Route::post('/courses/store',[CourseController::class,'store'])->name('courses.s
 Route::delete('/courses/{id}',[CourseController::class,'destroy'])->name('courses.destroy');
 Route::get('/courses/{id}/edit',[CourseController::class,'edit'])->name('courses.edit');
 Route::match(['put','patch'],'/courses/{id}',[CourseController::class,'update'])->name('courses.update');
+Route::get('/courses/trash',[CourseController::class,'trash'])->name('courses.trash');
 
 
 
@@ -100,5 +101,6 @@ Route::post('/students/store', [studentController::class, 'store'])->name('stude
 Route::delete('/students/{id}', [studentController::class, 'destroy'])->name('students.destroy');
 Route::get('/students/{id}/edit', [studentController::class, 'edit'])->name('students.edit');
 Route::match(['put','patch'],'/students/{id}', [studentController::class, 'update'])->name('students.update');
-
+//soft delete
+Route::get('/students/trash', [studentController::class, 'trash'])->name('students.trash');
 
