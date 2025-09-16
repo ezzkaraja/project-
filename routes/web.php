@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Appcontroller;
+use App\Http\Controllers\courseJsController;
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\dbOperationController;
 use App\Http\Controllers\FormController;
@@ -107,4 +108,7 @@ Route::match(['put','patch'],'/students/{id}', [studentController::class, 'updat
 Route::get('/students/trash', [studentController::class, 'trash'])->name('students.trash');
 Route::get('/students/trash/{id}/restore', [studentController::class, 'restore'])->name('students.restore');
 Route::delete('/students/trash/{id}/forcedelete', [studentController::class, 'forcedelete'])->name('students.forcedelete');
+
+//crud using js
+ Route::get('/courses-js',[courseJsController::class,'index'])->name('courses-js.index');
 
