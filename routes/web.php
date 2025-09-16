@@ -91,6 +91,8 @@ Route::delete('/courses/{id}',[CourseController::class,'destroy'])->name('course
 Route::get('/courses/{id}/edit',[CourseController::class,'edit'])->name('courses.edit');
 Route::match(['put','patch'],'/courses/{id}',[CourseController::class,'update'])->name('courses.update');
 Route::get('/courses/trash',[CourseController::class,'trash'])->name('courses.trash');
+Route::get('/courses/trash/{id}/restore',[CourseController::class,'restore'])->name('courses.restore');
+Route::delete('/courses/trash/{id}/forcedelete',[CourseController::class,'forcedelete'])->name('courses.forcedelete');
 
 
 
@@ -103,4 +105,6 @@ Route::get('/students/{id}/edit', [studentController::class, 'edit'])->name('stu
 Route::match(['put','patch'],'/students/{id}', [studentController::class, 'update'])->name('students.update');
 //soft delete
 Route::get('/students/trash', [studentController::class, 'trash'])->name('students.trash');
+Route::get('/students/trash/{id}/restore', [studentController::class, 'restore'])->name('students.restore');
+Route::delete('/students/trash/{id}/forcedelete', [studentController::class, 'forcedelete'])->name('students.forcedelete');
 

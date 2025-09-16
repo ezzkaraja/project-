@@ -98,4 +98,19 @@ class courseController extends Controller
         $courses=course::onlyTrashed()->paginate(10);
         return view('courses.trash',compact('courses'));
     }
+    public function restore($id){
+        $course=course::onlyTrashed()->findOrFail($id);
+        $course->restore();
+        return redirect()->route('courses.trash')
+                         ->with('sweet_success', 'Course restored successfully!');
+
+    }
+    public function forcedelete($id){
+        $course=course::onlyTrashed()->findOrFail($id);
+        File::delete(public_path('storage/'.$course->image));
+        $course->forceDelete();
+        return redirect()->route('courses.trash')
+                         ->with('sweet_success', 'Course deleted permanently successfully!');
+
+    }
 }

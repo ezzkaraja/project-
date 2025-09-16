@@ -36,7 +36,7 @@ class studentController extends Controller
     }
     public function destroy($id){
         $student = studnt::findOrFail($id);
-        File::delete(public_path('storage/'.$student->image));
+        // File::delete(paths: public_path('storage/'.$student->image));
         $student->delete();
 
         return redirect()->route('students.index')
@@ -66,5 +66,16 @@ class studentController extends Controller
     public function trash(){
         $students = studnt::onlyTrashed()->paginate(10);
         return view('students.trash',compact('students'));
+    }
+    public function restore($id){
+        $student= studnt::onlyTrashed()->findOrFail($id);
+        $student->restore();
+        return redirect()->route('students.trash')->with('success', 'Student restored successfully!');
+    }
+    public function forcedelete($id){
+        $student= studnt::onlyTrashed()->findOrFail($id);
+        File::delete(public_path('storage/'.$student->image));
+        $student->forcedelete();
+        return redirect()->route('students.trash')->with('success', 'Student deleted permanently successfully!');
     }
  }

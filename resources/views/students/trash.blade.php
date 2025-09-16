@@ -39,7 +39,7 @@
             <td class="border border-gray-300 px-4 py-2"><img width="100" src="{{ asset('storage/' . $student->image)}}" alt=""></td>
             <td class="border border-gray-300 px-4 py-2">{{$student->deleted_at->diffForHumans() }}</td>
             <td class="border border-gray-300 px-4 py-2">
-                <form action="{{route('students.destroy' , $student->id)}}" method="POST">
+                <form action="{{route('students.forcedelete' , $student->id)}}" method="POST">
                     @csrf
                     @method('DELETE')
                   <button onclick="return confirm('are you suor?!')" type="submit" class="inline-flex items-center justify-center w-8 h-8 bg-red-500 text-white rounded hover:bg-red-600 transition-colors">
@@ -47,10 +47,8 @@
             <path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path>
         </svg>
     </button>
-        <a href="{{ route('students.edit', [$student->id , 'page'=>request()->page]) }}" class="inline-flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors ml-2">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25ZM20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04Z"></path>
-        </svg>
+        <a href="{{ route('students.restore', [$student->id , 'page'=>request()->page]) }}" class="inline-flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors ml-2">
+        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5.82843 6.99955L8.36396 9.53509L6.94975 10.9493L2 5.99955L6.94975 1.0498L8.36396 2.46402L5.82843 4.99955H13C17.4183 4.99955 21 8.58127 21 12.9996C21 17.4178 17.4183 20.9996 13 20.9996H4V18.9996H13C16.3137 18.9996 19 16.3133 19 12.9996C19 9.68584 16.3137 6.99955 13 6.99955H5.82843Z"></path></svg>
     </a>
                 </form>
             </td>
