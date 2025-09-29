@@ -12,7 +12,7 @@ class courseJsController extends Controller
     public function index(Request $request){
         $courses=course::orderBy('id',$request->order ?? 'DESC')->when($request->search,function(Builder $query){
             $query->where('title','like','%'.request()->search.'%');
-         })->paginate($request->count ?? 2);
+         })->paginate($request->count ?? 10);
           return view('courses.courses-js',compact('courses'));
         }
 

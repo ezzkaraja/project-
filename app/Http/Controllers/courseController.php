@@ -16,7 +16,7 @@ class courseController extends Controller
         $courses=course::orderBy('id', $request->order ??'DESC' )->when($request->search,function (Builder $query){
 
             $query->where('title','like','%'.request()->search.'%');
-                  }  )->paginate($request->count ?? 2);
+                  }  )->paginate($request->count ?? 10);
         return view('courses.index',compact('courses'));
     }
     public function create(){
@@ -51,6 +51,13 @@ class courseController extends Controller
             'category'    => $request->category,
             'description' => $request->description,
         ]);
+        if($request->wantsJson()){
+            $courses=course::orderBy('id','DESC')->paginate(10);
+            $data=view('courses._table',compact('courses'))->render();
+            return response()->json(['
+            status'=>'success',
+            'data'=>$data]);
+        }
 
         return redirect()->route('courses.index')
                          ->with('sweet_success', 'Course created successfully!');
